@@ -11,6 +11,8 @@ import Contact from './pages/Contact'
 import PageNotFound from './pages/PageNotFound'
 import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'
+import Dashboard from './pages/User/Dashboard'
+import PrivateRoute from './components/Routes/PrivateRoute'
 
 const App = () => {
   return (
@@ -23,6 +25,11 @@ const App = () => {
 
         <Routes>
 
+          <Route path="/dashboard" element={<PrivateRoute />} >
+            <Route path="" element={<Dashboard />} />
+          </Route>
+
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />

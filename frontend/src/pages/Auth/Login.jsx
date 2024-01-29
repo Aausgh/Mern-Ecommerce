@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useAuth } from '../../context/auth.jsx';
@@ -11,6 +11,7 @@ const Login = () => {
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
       const navigate = useNavigate();
+      const location = useLocation();
 
       const handleSubmit = async (e) => {
             e.preventDefault();
@@ -30,7 +31,7 @@ const Login = () => {
                               token: res.data.token
                         })
                         localStorage.setItem("auth", JSON.stringify(res.data))
-                        navigate("/");
+                        navigate(location.state || "/");
                   } else {
                         toast.error(res.data.message)
                   }
