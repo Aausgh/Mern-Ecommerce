@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/auth';
+import { toast } from 'react-toastify';
 
 
 const Header = () => {
+      const [auth, setAuth] = useAuth();
+
+      const handleLogout = () => {
+            setAuth({
+                  ...auth,
+                  user: null,
+                  token: ''
+            });
+            localStorage.removeItem('auth');
+            toast.success("Logout Successfully");
+      }
+
       const [isMenuOpen, setMenuOpen] = useState(false);
 
       const toggleMenu = () => {
@@ -53,13 +67,36 @@ const Header = () => {
                               </button>
                         </div>
 
-                        <NavLink to={"/login"} className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-200 hover:bg-gray-100 text-xl text-gray-900 font-bold rounded-xl transition duration-200">
-                              Log In
-                        </NavLink>
 
-                        <NavLink to={"/register"} className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-xl text-white font-bold rounded-xl transition duration-200">
-                              Register
-                        </NavLink>
+                        {
+                              !auth.user ? (
+                                    <>
+                                          <NavLink
+                                                to={"/login"}
+                                                className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-200 hover:bg-gray-100 text-xl text-gray-900 font-bold rounded-xl transition duration-200"
+                                          >
+                                                Log In
+                                          </NavLink>
+
+                                          <NavLink
+                                                to={"/register"}
+                                                className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-xl text-white font-bold rounded-xl transition duration-200"
+                                          >
+                                                Register
+                                          </NavLink>
+                                    </>
+                              ) : (
+                                    <>
+                                          <NavLink
+                                                onClick={handleLogout}
+                                                to={"/login"}
+                                                className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-xl text-white font-bold rounded-xl transition duration-200"
+                                          >
+                                                Logout
+                                          </NavLink>
+                                    </>
+                              )
+                        }
                   </nav>
 
                   <motion.div
@@ -100,13 +137,33 @@ const Header = () => {
 
                               <div className="mt-auto">
                                     <div className="pt-6">
-                                          <NavLink to={"/login"} className="block px-4 py-3 mb-3 leading-loose text-lg text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl">
-                                                Log In
-                                          </NavLink>
+                                          {
+                                                !auth.user ? (
+                                                      <>
+                                                            <NavLink
+                                                                  to={"/login"}
+                                                                  className="block px-4 py-3 mb-3 leading-loose text-lg text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl">
+                                                                  Log In
+                                                            </NavLink>
 
-                                          <NavLink to={"/register"} className="block px-4 py-3 mb-2 leading-loose text-lg text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl">
-                                                Register
-                                          </NavLink>
+                                                            <NavLink
+                                                                  to={"/register"}
+                                                                  className="block px-4 py-3 mb-2 leading-loose text-lg text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl">
+                                                                  Register
+                                                            </NavLink>
+                                                      </>
+                                                ) : (
+                                                      <>
+                                                            <NavLink
+                                                                  onClick={handleLogout}
+                                                                  to={"/login"}
+                                                                  className="block px-4 py-3 mb-2 leading-loose text-lg text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                                                            >
+                                                                  Logout
+                                                            </NavLink>
+                                                      </>
+                                                )
+                                          }
                                     </div>
 
                                     {/* <p className="my-4 text-xs text-center text-gray-400">
