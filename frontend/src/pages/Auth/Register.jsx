@@ -10,6 +10,7 @@ const Register = () => {
       const [password, setPassword] = useState("");
       const [phone, setPhone] = useState("");
       const [address, setAddress] = useState("");
+      const [answer, setAnswer] = useState("");
       const navigate = useNavigate();
 
       const handleSubmit = async (e) => {
@@ -21,7 +22,8 @@ const Register = () => {
                         email,
                         password,
                         phone,
-                        address
+                        address,
+                        answer
 
                   });
 
@@ -58,7 +60,7 @@ const Register = () => {
                               <div className="mt-12">
 
                                     <form onSubmit={handleSubmit}>
-                                          <div className='py-4'>
+                                          <div className='py-2'>
                                                 <label htmlFor='name' className="text-sm font-bold px-2 text-gray-700 tracking-wide">Name</label>
                                                 <input
                                                       className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
@@ -69,7 +71,7 @@ const Register = () => {
                                                 />
                                           </div>
 
-                                          <div className='py-4'>
+                                          <div className='py-2'>
                                                 <label htmlFor='email' className="text-sm px-2 font-bold text-gray-700 tracking-wide">Email Address</label>
                                                 <input
                                                       className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
@@ -79,7 +81,7 @@ const Register = () => {
                                                       placeholder="mike@gmail.com" />
                                           </div>
 
-                                          <div className='py-4'>
+                                          <div className='py-2'>
                                                 <label htmlFor='password' className="text-sm px-2 font-bold text-gray-700 tracking-wide">Password </label>
                                                 <input
                                                       className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
@@ -89,7 +91,7 @@ const Register = () => {
                                                       placeholder="********" />
                                           </div>
 
-                                          <div className='py-4'>
+                                          <div className='py-2'>
                                                 <label htmlFor='phone' className="text-sm px-2 font-bold text-gray-700 tracking-wide">Phone </label>
                                                 <input
                                                       className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
@@ -99,7 +101,7 @@ const Register = () => {
                                                       placeholder="561-552-9770" />
                                           </div>
 
-                                          <div className='py-4'>
+                                          <div className='py-2'>
                                                 <label htmlFor='address' className="text-sm px-2 font-bold text-gray-700 tracking-wide">Address </label>
                                                 <input
                                                       className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
@@ -110,9 +112,20 @@ const Register = () => {
                                                 />
                                           </div>
 
-                                          <div className="mt-10">
-                                                <button className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
-                                                font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
+                                          <div className='py-2'>
+                                                <label htmlFor='answer' className="text-sm px-2 font-bold text-gray-700 tracking-wide">Answer </label>
+                                                <input
+                                                      className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
+                                                      type='text'
+                                                      value={answer}
+                                                      onChange={(e) => setAnswer(e.target.value)}
+                                                      placeholder="What is your favorite color?"
+                                                />
+                                          </div>
+
+                                          <div className="py-8">
+                                                <button className="bg-[#fb5607] hover:bg-[#fa9500] text-gray-100 p-4 w-full rounded-full tracking-wide
+                                                font-semibold font-display focus:outline-none focus:shadow-outline
                                                 shadow-lg">
                                                       Submit
                                                 </button>
@@ -120,9 +133,9 @@ const Register = () => {
 
                                     </form>
 
-                                    <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
+                                    <div className=" text-sm font-display font-semibold text-gray-700 text-center">
                                           Already have an account ?
-                                          <NavLink to={"/login"} className="cursor-pointer text-indigo-600 hover:text-indigo-800">Log in</NavLink>
+                                          <NavLink to={"/login"} className="cursor-pointer text-base font-semibold text-indigo-600 ml-2 hover:text-indigo-800">Log in</NavLink>
                                     </div>
                               </div>
                         </div>

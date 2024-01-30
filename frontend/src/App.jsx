@@ -13,6 +13,7 @@ import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'
 import Dashboard from './pages/User/Dashboard'
 import PrivateRoute from './components/Routes/PrivateRoute'
+import ForgotPassword from './pages/Auth/ForgotPassword'
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
 
       <Header />
 
-      <main className='min-h-screen bg-gray-100'>
+      <main className='min-h-screen w-full bg-gray-100'>
         <ToastContainer />
 
         <Routes>
@@ -32,6 +33,7 @@ const App = () => {
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />

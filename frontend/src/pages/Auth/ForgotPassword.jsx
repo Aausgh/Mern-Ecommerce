@@ -1,37 +1,31 @@
 import React, { useState } from 'react'
-import { NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { useAuth } from '../../context/auth.jsx';
 
-
-const Login = () => {
-      const [auth, setAuth] = useAuth();
+const ForgotPassword = () => {
 
       const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
+      const [newPassword, setNewPassword] = useState("");
+      const [answer, setAnswer] = useState("");
       const navigate = useNavigate();
-      const location = useLocation();
 
       const handleSubmit = async (e) => {
             e.preventDefault();
             try {
                   const api = import.meta.env.VITE_SERVER_URL;
-                  const res = await axios.post(`${api}/auth/login`, {
+                  const res = await axios.post(`${api}/auth/forgot-password`, {
                         email,
-                        password,
+                        newPassword,
+                        answer
 
                   });
 
                   if (res && res.data.success) {
                         toast.success(res.data.message)
-                        setAuth({
-                              ...auth,
-                              user: res.data.user,
-                              token: res.data.token
-                        })
-                        localStorage.setItem("auth", JSON.stringify(res.data))
-                        navigate(location.state || "/");
+
+
+                        navigate("/login");
                   } else {
                         toast.error(res.data.message)
                   }
@@ -46,23 +40,23 @@ const Login = () => {
             <div className="lg:flex">
                   <div className="lg:w-1/2 xl:max-w-screen-sm">
 
-                        <div className="py-12 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
+                        <div className="hidden lg:py-12  lg:bg-white lg:flex justify-center lg:justify-start lg:px-12">
 
-                              <div className="cursor-pointer flex items-center">
+                              <div className=" cursor-pointer flex items-center">
 
                                     <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">blockify</div>
                               </div>
                         </div>
 
-                        <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
+                        <div className="mt-10 px-12 sm:py-16 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
 
                               <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
-                                  xl:text-bold">Log in</h2>
+                                  xl:text-bold">Reset Password</h2>
 
                               <div className="mt-12">
 
                                     <form onSubmit={handleSubmit}>
-                                          <div>
+                                          <div className='py-4'>
                                                 <label htmlFor='email' className="text-sm font-bold text-gray-700 tracking-wide">Email Address</label>
                                                 <input
                                                       className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500" type='email'
@@ -72,23 +66,28 @@ const Login = () => {
                                                 />
                                           </div>
 
-                                          <div className="mt-8">
-                                                <div className="flex justify-between items-center">
-                                                      <label htmlFor='password' className="text-sm font-bold text-gray-700 tracking-wide">
-                                                            Password
-                                                      </label>
-                                                      <div>
-                                                            <NavLink
-                                                                  to={'/forgot-password'} className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer">
-                                                                  Forgot Password?
-                                                            </NavLink>
-                                                      </div>
-                                                </div>
+                                          <div className='py-4'>
+                                                <label htmlFor='answer' className="text-sm font-bold text-gray-700 tracking-wide">Answer</label>
+                                                <input
+                                                      className="w-full text-lg py-2 border-b border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500"
+                                                      type='text'
+                                                      value={answer}
+                                                      onChange={(e) => setAnswer(e.target.value)}
+                                                      placeholder="Enter your favorite color"
+                                                />
+                                          </div>
+
+                                          <div className="py-4">
+
+                                                <label htmlFor='newPassword' className="text-sm font-bold text-gray-700 tracking-wide">
+                                                      New Password
+                                                </label>
 
                                                 <input
-                                                      className="w-full text-lg py-2 border rounded-xl border-gray-300 focus:outline-none focus:border-indigo-500" type='password'
-                                                      value={password}
-                                                      onChange={(e) => setPassword(e.target.value)}
+                                                      className="w-full text-lg py-2 border rounded-xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                                                      type='password'
+                                                      value={newPassword}
+                                                      onChange={(e) => setNewPassword(e.target.value)}
                                                       placeholder="Enter your password"
                                                 />
                                           </div>
@@ -98,16 +97,11 @@ const Login = () => {
                                                       className="bg-[#fb5607] hover:bg-[#fa9500] text-gray-100 p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outline shadow-lg"
                                                       type='submit'
                                                 >
-                                                      Log In
+                                                      Reset
                                                 </button>
                                           </div>
 
                                     </form>
-
-                                    <div className="py-6 text-sm font-display font-semibold text-gray-700 text-center">
-                                          Don't have an account ?
-                                          <NavLink to={"/register"} className="cursor-pointer text-base font-semibold text-indigo-600 ml-2 hover:text-indigo-800">Register</NavLink>
-                                    </div>
                               </div>
                         </div>
                   </div>
@@ -154,4 +148,4 @@ const Login = () => {
       )
 }
 
-export default Login
+export default ForgotPassword

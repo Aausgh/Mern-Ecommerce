@@ -4,10 +4,10 @@ import { useAuth } from '../context/auth';
 const Home = () => {
       const [auth, setAuth] = useAuth();
       return (
-            <>
+            <main className=" relative w-full m-auto">
                   <div>Home</div>
-                  <h1>{JSON.stringify(auth, null, 4)}</h1>
-            </>
+                  <pre>{JSON.stringify(auth, null, 4)}</pre>
+            </main>
       );
 }
 

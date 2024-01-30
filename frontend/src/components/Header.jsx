@@ -3,6 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
+import {
+      Menu,
+      MenuButton,
+      MenuList,
+      MenuItem,
+      MenuGroup,
+      Button,
+      Avatar
+} from '@chakra-ui/react'
 
 
 const Header = () => {
@@ -36,67 +45,81 @@ const Header = () => {
                   <nav className="relative px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-100">
 
 
-                        <div>
-                              <a className="text-3xl font-bold leading-none" href="#">
-                                    Hello
-                              </a>
 
-                              <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
-                                    {Links.map((links) => (
-                                          <li key={links.name}>
+                        <NavLink to={"/"} className="text-3xl font-bold leading-none">
+                              Hello
+                        </NavLink>
+
+                        <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
+                              {Links.map((links) => (
+                                    <li key={links.name}>
+                                          <NavLink
+                                                to={links.link}
+                                                className="text-lg font-semibold text-gray-800 hover:text-gray-600"
+                                          >
+                                                {links.name}
+                                          </NavLink>
+
+                                    </li>
+                              ))}
+                        </ul>
+
+
+
+                        <div className='flex justify-center items-center'>
+
+
+
+
+                              {
+                                    !auth.user ? (
+                                          <>
                                                 <NavLink
-                                                      to={links.link}
-                                                      className="text-lg font-semibold text-gray-800 hover:text-gray-600"
+                                                      to={"/login"}
+                                                      className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-200 hover:bg-gray-100 text-xl text-gray-900 font-bold rounded-xl transition duration-200"
                                                 >
-                                                      {links.name}
+                                                      Log In
                                                 </NavLink>
 
-                                          </li>
-                                    ))}
-                              </ul>
+                                                <NavLink
+                                                      to={"/register"}
+                                                      className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-xl text-white font-bold rounded-xl transition duration-200"
+                                                >
+                                                      Register
+                                                </NavLink>
+                                          </>
+                                    ) : (
+
+                                          <Menu >
+                                                <MenuButton >
+
+                                                      <Avatar name={auth.user.name} src='' />
+                                                </MenuButton>
+                                                <MenuList>
+                                                      <MenuGroup >
+                                                            <MenuItem>
+                                                                  <NavLink to={"/dashboard"}>
+                                                                        Dashboard
+                                                                  </NavLink>
+                                                            </MenuItem>
+                                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                                      </MenuGroup>
+
+                                                </MenuList>
+                                          </Menu>
+                                    )
+                              }
+
+                              <div className="lg:hidden">
+                                    <button className={`navbar-burger flex items-center text-blue-600 p-3 transition duration-300 transform ${isMenuOpen ? 'rotate-180' : ''
+                                          }`} onClick={toggleMenu}>
+                                          <svg className="block h-4 w-4 fill-[#14213d]" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <title>Mobile menu</title>
+                                                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                                          </svg>
+                                    </button>
+                              </div>
                         </div>
-
-
-                        <div className="lg:hidden">
-                              <button className={`navbar-burger flex items-center text-blue-600 p-3 transition duration-300 transform ${isMenuOpen ? 'rotate-180' : ''
-                                    }`} onClick={toggleMenu}>
-                                    <svg className="block h-4 w-4 fill-[#14213d]" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                          <title>Mobile menu</title>
-                                          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                                    </svg>
-                              </button>
-                        </div>
-
-
-                        {
-                              !auth.user ? (
-                                    <>
-                                          <NavLink
-                                                to={"/login"}
-                                                className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-200 hover:bg-gray-100 text-xl text-gray-900 font-bold rounded-xl transition duration-200"
-                                          >
-                                                Log In
-                                          </NavLink>
-
-                                          <NavLink
-                                                to={"/register"}
-                                                className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-xl text-white font-bold rounded-xl transition duration-200"
-                                          >
-                                                Register
-                                          </NavLink>
-                                    </>
-                              ) : (
-                                    <>
-                                          <NavLink
-                                                onClick={handleLogout}
-                                                to={"/login"}
-                                                className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-xl text-white font-bold rounded-xl transition duration-200"
-                                          >
-                                                Logout
-                                          </NavLink>
-                                    </>
-                              )
-                        }
                   </nav>
 
                   <motion.div
