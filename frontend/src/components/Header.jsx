@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
+import logo from '../assets/images/logo.png'
 import {
       Menu,
       MenuButton,
@@ -10,12 +11,29 @@ import {
       MenuItem,
       MenuGroup,
       Button,
-      Avatar
+      Avatar,
+      Icon,
+      Image,
+      useDisclosure,
+      Drawer,
+      DrawerBody,
+      DrawerFooter,
+      DrawerHeader,
+      DrawerOverlay,
+      DrawerContent,
+      DrawerCloseButton,
+      Input
 } from '@chakra-ui/react'
+import { HiOutlineLogout, HiMenuAlt3 } from "react-icons/hi";
+import { RxHamburgerMenu, RxDashboard } from "react-icons/rx";
+import { IoCloseOutline } from "react-icons/io5";
 
 
 const Header = () => {
       const [auth, setAuth] = useAuth();
+
+      const { isOpen, onOpen, onClose } = useDisclosure()
+      const btnRef = useRef()
 
       const handleLogout = () => {
             setAuth({
@@ -27,11 +45,6 @@ const Header = () => {
             toast.success("Logout Successfully");
       }
 
-      const [isMenuOpen, setMenuOpen] = useState(false);
-
-      const toggleMenu = () => {
-            setMenuOpen(!isMenuOpen);
-      };
 
       const Links = [
             { name: "Home", link: "/" },
@@ -42,13 +55,13 @@ const Header = () => {
 
       return (
             <>
-                  <nav className="relative px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-100">
+                  <nav className=" sticky top-0 z-50 px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-100">
 
 
-
-                        <NavLink to={"/"} className="text-3xl font-bold leading-none">
-                              Hello
+                        <NavLink to={"/"} className="text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">
+                              eLectronify
                         </NavLink>
+
 
                         <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
                               {Links.map((links) => (
@@ -68,7 +81,48 @@ const Header = () => {
 
                         <div className='flex justify-center items-center'>
 
+                              <div className='lg:hidden'>
 
+                                    <Icon as={HiMenuAlt3} w={8} h={8} ref={btnRef} onClick={onOpen} className={` transition duration-300 transform ${isOpen ? 'rotate-180' : ''
+                                          }`} />
+
+                              </div>
+
+                              <Drawer
+                                    isOpen={isOpen}
+                                    placement='left'
+                                    onClose={onClose}
+                                    finalFocusRef={btnRef}
+                              >
+                                    <DrawerOverlay />
+                                    <DrawerContent>
+                                          <DrawerCloseButton />
+                                          <DrawerHeader className="text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">eLectronify</DrawerHeader>
+
+                                          <DrawerBody>
+                                                <ul>
+                                                      {Links.map((links) => (
+                                                            <li key={links.name} className="mb-1">
+                                                                  <NavLink
+                                                                        to={links.link}
+                                                                        className="block p-4 text-lg font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md"
+                                                                  >
+                                                                        {links.name}
+                                                                  </NavLink>
+                                                            </li>
+                                                      ))}
+                                                </ul>
+
+                                          </DrawerBody>
+
+                                          <DrawerFooter>
+                                                <Button variant='outline' mr={3} onClick={onClose}>
+                                                      Cancel
+                                                </Button>
+                                                <Button colorScheme='blue'>Save</Button>
+                                          </DrawerFooter>
+                                    </DrawerContent>
+                              </Drawer>
 
 
                               {
@@ -92,17 +146,15 @@ const Header = () => {
 
                                           <Menu >
                                                 <MenuButton >
-
-                                                      <Avatar name={auth.user.name} src='' />
+                                                      <Avatar name={auth.user.name} size='sm' src='' />
                                                 </MenuButton>
                                                 <MenuList>
                                                       <MenuGroup >
-                                                            <MenuItem>
-                                                                  <NavLink to={"/dashboard"}>
-                                                                        Dashboard
-                                                                  </NavLink>
+                                                            <MenuItem as={NavLink} icon={<RxDashboard size={20} />} to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="text-lg font-semibold ">
+
+                                                                  Dashboard
                                                             </MenuItem>
-                                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                                            <MenuItem onClick={handleLogout} icon={<HiOutlineLogout size={20} />} color="red" className="text-lg font-semibold text-red-600 ">Logout</MenuItem>
                                                       </MenuGroup>
 
                                                 </MenuList>
@@ -110,19 +162,11 @@ const Header = () => {
                                     )
                               }
 
-                              <div className="lg:hidden">
-                                    <button className={`navbar-burger flex items-center text-blue-600 p-3 transition duration-300 transform ${isMenuOpen ? 'rotate-180' : ''
-                                          }`} onClick={toggleMenu}>
-                                          <svg className="block h-4 w-4 fill-[#14213d]" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <title>Mobile menu</title>
-                                                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                                          </svg>
-                                    </button>
-                              </div>
-                        </div>
-                  </nav>
 
-                  <motion.div
+                        </div>
+                  </nav >
+
+                  {/* <motion.div
                         className={`fixed inset-0 z-50  ${isMenuOpen ? '' : 'hidden'}`}
                         animate={{ x: isMenuOpen ? '0%' : '-100%' }}
                         transition={{ duration: 0.5, ease: 'easeInOut' }}
@@ -135,11 +179,7 @@ const Header = () => {
                                     </a>
 
                                     <button className="navbar-close" onClick={toggleMenu}>
-                                          <svg className="h-6 w-6 text-[#14213d] cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-
-                                          </svg>
+                                          <Icon as={IoCloseOutline} w={8} h={8} color="black" />
                                     </button>
                               </div>
 
@@ -189,12 +229,10 @@ const Header = () => {
                                           }
                                     </div>
 
-                                    {/* <p className="my-4 text-xs text-center text-gray-400">
-                                          <span>Copyright © 2021</span>
-                                    </p> */}
+                                    
                               </div>
                         </nav>
-                  </motion.div>
+                  </motion.div> */}
             </>
       );
 };

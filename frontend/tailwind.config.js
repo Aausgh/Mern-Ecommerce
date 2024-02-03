@@ -13,6 +13,8 @@ export default {
         deca: ["Lexend Deca", "Inter", "sans-serif"],
         app: ["Homemade Apple", "cursive"],
         out: ["Outfit", "Inter", "sans-serif"],
+        alfa: ['Alfa Slab One', "serif"],
+        fira: ['Fira Code', 'monospace']
       },
     },
     colors: {

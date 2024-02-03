@@ -111,7 +111,7 @@ const Contact = () => {
 
                         </section>
 
-                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-6 m-auto -translate-y-14'>
+                        <div className='w-[35%]  lg:w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-6 m-auto -translate-y-14'>
 
                               {card.map((card) => (
                                     <div key={card.id} className=' shadow-xl bg-gray-100 py-2 rounded-xl flex justify-center items-center gap-2 lg:gap-6'>

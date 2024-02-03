@@ -12,14 +12,20 @@ import PageNotFound from './pages/PageNotFound'
 import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'
 import Dashboard from './pages/User/Dashboard'
-import PrivateRoute from './components/Routes/PrivateRoute'
+import PrivateRoute from './Routes/PrivateRoute'
 import ForgotPassword from './pages/Auth/ForgotPassword'
+import AdminDashboard from './pages/Admin/AdminDashboard'
+import AdminRoute from './Routes/AdminRoute'
+import { useAuth } from './context/auth'
+import AdminMenu from './components/AdminMenu'
 
 const App = () => {
+  const [auth, setAuth] = useAuth();
   return (
     <>
-
       <Header />
+
+
 
       <main className='min-h-screen w-full bg-gray-100'>
         <ToastContainer />
@@ -27,7 +33,11 @@ const App = () => {
         <Routes>
 
           <Route path="/dashboard" element={<PrivateRoute />} >
-            <Route path="" element={<Dashboard />} />
+            <Route path="user" element={<Dashboard />} />
+          </Route>
+
+          <Route path="/dashboard" element={<AdminRoute />} >
+            <Route path="admin" element={<AdminDashboard />} />
           </Route>
 
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
