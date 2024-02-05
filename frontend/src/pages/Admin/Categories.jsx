@@ -1,8 +1,7 @@
 import React from 'react'
 import AdminMenu from '../../components/AdminMenu'
-import Contact from '../Contact'
 
-const AdminDashboard = () => {
+const Categories = () => {
       return (
             <>
                   <div className='w-full grid grid-cols-12 gap-4'>
@@ -14,7 +13,7 @@ const AdminDashboard = () => {
 
                         </div>
                         <div className='col-span-10 lg:col-span-10'>
-                              <h1>Dashboard</h1>
+                              <h1>Categories</h1>
                         </div>
 
                   </div>
@@ -22,4 +21,4 @@ const AdminDashboard = () => {
       )
 }
 
-export default AdminDashboard
+export default Categories

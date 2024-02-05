@@ -21,7 +21,8 @@ export default {
       ...colors,
       primary: colors.orange,
       secondary: colors.purple,
-      tertiary:colors.yellow
+      tertiary: colors.yellow - 400,
+      gray: colors.gray-200
     },
   },
   plugins: [

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
@@ -22,15 +22,14 @@ import {
       DrawerOverlay,
       DrawerContent,
       DrawerCloseButton,
-      Input
+      Heading,
 } from '@chakra-ui/react'
-import { HiOutlineLogout, HiMenuAlt3 } from "react-icons/hi";
-import { RxHamburgerMenu, RxDashboard } from "react-icons/rx";
-import { IoCloseOutline } from "react-icons/io5";
-
+import { HiOutlineLogout, HiMenuAlt3, HiOutlineShoppingCart } from "react-icons/hi";
+import { RxDashboard } from "react-icons/rx";
 
 const Header = () => {
       const [auth, setAuth] = useAuth();
+      const navigate = useNavigate()
 
       const { isOpen, onOpen, onClose } = useDisclosure()
       const btnRef = useRef()
@@ -42,6 +41,7 @@ const Header = () => {
                   token: ''
             });
             localStorage.removeItem('auth');
+            navigate('/login');
             toast.success("Logout Successfully");
       }
 
@@ -55,10 +55,10 @@ const Header = () => {
 
       return (
             <>
-                  <nav className=" sticky top-0 z-50 px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-100">
+                  <nav className=" sticky top-2 mx-5 rounded-xl shadow-xl z-50 px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-200">
 
 
-                        <NavLink to={"/"} className="text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">
+                        <NavLink to={"/"} className="text-xl lg:text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">
                               eLectronify
                         </NavLink>
 
@@ -95,9 +95,9 @@ const Header = () => {
                                     finalFocusRef={btnRef}
                               >
                                     <DrawerOverlay />
-                                    <DrawerContent>
+                                    <DrawerContent sx={{ borderRadius: '12px', marginY: '10px', marginX: '10px' }}>
                                           <DrawerCloseButton />
-                                          <DrawerHeader className="text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">eLectronify</DrawerHeader>
+                                          <Heading className="text-3xl px-3 py-2 font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">eLectronify</Heading>
 
                                           <DrawerBody>
                                                 <ul>
@@ -105,7 +105,7 @@ const Header = () => {
                                                             <li key={links.name} className="mb-1">
                                                                   <NavLink
                                                                         to={links.link}
-                                                                        className="block p-4 text-lg font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md"
+                                                                        className="block p-4 text-lg font-semibold border-b border-gray-200 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md"
                                                                   >
                                                                         {links.name}
                                                                   </NavLink>
@@ -116,10 +116,29 @@ const Header = () => {
                                           </DrawerBody>
 
                                           <DrawerFooter>
-                                                <Button variant='outline' mr={3} onClick={onClose}>
-                                                      Cancel
-                                                </Button>
-                                                <Button colorScheme='blue'>Save</Button>
+                                                {
+                                                      !auth.user ? (
+                                                            <div div className="w-full mr-auto flex justify-center gap-4">
+                                                                  <NavLink
+                                                                        to={"/login"}
+                                                                        className="w-full px-4 py-3 mb-3 leading-loose text-lg text-center font-semibold bg-gray-200 hover:bg-gray-100 rounded-xl">
+                                                                        Log In
+                                                                  </NavLink>
+
+                                                                  <NavLink
+                                                                        to={"/register"}
+                                                                        className="w-full px-4 py-3 mb-3 leading-loose text-lg text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl">
+                                                                        Register
+                                                                  </NavLink>
+                                                            </div>
+                                                      ) : (
+                                                            <div className="mr-auto">
+                                                                  <Avatar name={auth.user.name} size='sm' src='' />
+
+
+                                                            </div>
+                                                      )
+                                                }
                                           </DrawerFooter>
                                     </DrawerContent>
                               </Drawer>
@@ -144,26 +163,43 @@ const Header = () => {
                                           </>
                                     ) : (
 
-                                          <Menu >
-                                                <MenuButton >
-                                                      <Avatar name={auth.user.name} size='sm' src='' />
-                                                </MenuButton>
-                                                <MenuList>
-                                                      <MenuGroup >
-                                                            <MenuItem as={NavLink} icon={<RxDashboard size={20} />} to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="text-lg font-semibold ">
+                                          <>
+                                                <Icon as={HiOutlineShoppingCart} w={8} h={8} marginEnd={2} ref={btnRef} onClick={onOpen} />
+                                                <Menu >
+                                                      <MenuButton >
+                                                            <Avatar name={auth.user.name} size='sm' src='' />
+                                                      </MenuButton>
+                                                      <MenuList >
+                                                            <MenuGroup as="h1" title={auth.user.name} className="capitalize text-xl border-b border-gray-200" >
 
-                                                                  Dashboard
-                                                            </MenuItem>
-                                                            <MenuItem onClick={handleLogout} icon={<HiOutlineLogout size={20} />} color="red" className="text-lg font-semibold text-red-600 ">Logout</MenuItem>
-                                                      </MenuGroup>
+                                                                  <MenuItem
+                                                                        as={NavLink}
+                                                                        icon={<RxDashboard size={15} />}
+                                                                        color="gary.800"
+                                                                        to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
+                                                                        className="text-lg font-medium  hover:text-black"
+                                                                  >
 
-                                                </MenuList>
-                                          </Menu>
+                                                                        Dashboard
+                                                                  </MenuItem>
+                                                                  <MenuItem
+                                                                        onClick={handleLogout}
+                                                                        icon={<HiOutlineLogout size={20} />}
+                                                                        color="red.300"
+                                                                        className="text-lg font-medium hover:text-red-700"
+                                                                  >
+                                                                        Logout
+                                                                  </MenuItem>
+                                                            </MenuGroup>
+
+                                                      </MenuList>
+                                                </Menu>
+                                          </>
                                     )
                               }
 
 
-                        </div>
+                        </div >
                   </nav >
 
                   {/* <motion.div

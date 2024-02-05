@@ -44,20 +44,12 @@ const Register = () => {
             <div className="lg:flex">
                   <div className="lg:w-1/2 xl:max-w-screen-sm">
 
-                        <div className="py-6 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
-
-                              <div className="cursor-pointer flex items-center">
-
-                                    <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">blockify</div>
-                              </div>
-                        </div>
-
-                        <div className="py-8 px-12 sm:px-24 md:px-48 lg:px-14 xl:px-24 xl:max-w-2xl">
+                        <div className="py-16 px-12 sm:px-24 md:px-48 lg:px-14 xl:px-24 xl:max-w-2xl">
 
                               <h2 className="text-center text-4xl text-indigo-900 font-semibold lg:text-left xl:text-5xl
                                   xl:text-bold">Register</h2>
 
-                              <div className="mt-12">
+                              <div className="mt-10">
 
                                     <form onSubmit={handleSubmit}>
                                           <div className='py-2'>

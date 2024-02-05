@@ -1,19 +1,19 @@
 import React from 'react'
 import UserMenu from '../../components/UserMenu'
 
-const Dashboard = () => {
+const Order = () => {
       return (
             <>
                   <div className='w-full grid grid-cols-12 gap-4'>
-                        <div className=' col-span-2 lg:col-span-2'>
+                        <div className=' col-span-2 lg:col-span-3'>
 
                               <div className='fixed '>
                                     <UserMenu />
                               </div>
 
                         </div>
-                        <div className='col-span-10 lg:col-span-10'>
-                              <h1>Dashboard</h1>
+                        <div className='col-span-10 lg:col-span-9'>
+                              <h1>Orders</h1>
                         </div>
 
                   </div>
@@ -21,4 +21,4 @@ const Dashboard = () => {
       )
 }
 
-export default Dashboard
+export default Order

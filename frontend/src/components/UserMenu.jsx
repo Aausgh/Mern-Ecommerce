@@ -4,22 +4,19 @@ import { NavLink } from 'react-router-dom';
 
 import { useAuth } from '../context/auth';
 
-import { MdSpaceDashboard, MdProductionQuantityLimits, MdOutlineReviews } from "react-icons/md";
-import { BiSolidCategoryAlt, BiSolidCoupon } from "react-icons/bi";
+import { MdSpaceDashboard } from "react-icons/md";
+import { BiSolidCoupon } from "react-icons/bi";
 import { TiThList } from "react-icons/ti";
+import { CgProfile } from "react-icons/cg";
 
 
-const AdminMenu = () => {
+const UserMenu = () => {
 
 
       const AdminLinks = [
-            { name: "Dashboard", icon: <MdSpaceDashboard size={25} />, link: "/dashboard/admin" },
-            { name: "Products", icon: <MdProductionQuantityLimits size={25} />, link: "/dashboard/admin/products" },
-            { name: "Categories", icon: <BiSolidCategoryAlt size={25} />, link: "/dashboard/admin/categories" },
-            { name: "Orders", icon: <TiThList size={25} />, link: "/dashboard/admin/orders" },
-            { name: "Users", icon: <FaUsers size={25} />, link: "/dashboard/admin/users" },
-            { name: "Reviews", icon: <MdOutlineReviews size={25} />, link: "/dashboard/admin/reviews" },
-            { name: "Coupons", icon: <BiSolidCoupon size={25} />, link: "/dashboard/admin/coupons" },
+            { name: "Profile", icon: <CgProfile size={25} />, link: "/dashboard/user" },
+            { name: "Orders", icon: <TiThList size={25} />, link: "/dashboard/user/orders" },
+            // { name: "Coupons", icon: <BiSolidCoupon size={25} />, link: "/dashboard/user/coupons" },
 
       ]
 
@@ -27,7 +24,7 @@ const AdminMenu = () => {
       return (
             <>
 
-                  <div className=" w-[80%] h-[65vh] mx-2 md:mx-6 lg:mx-8 z-50 bg-gray-200 shadow-xl pt-10 rounded-xl border-r border-white dark:bg-gray-800 dark:border-gray-700">
+                  <div className=" w-full h-auto my-4 mx-2 md:mx-6 lg:mx-8 bg-gray-200 pt-10 rounded-xl border-r border-white dark:bg-gray-800 dark:border-gray-700">
 
                         <div className="w-full h-full  px-3 pb-4 overflow-y-auto  dark:bg-gray-800">
                               <ul className="space-y-2 font-medium">
@@ -55,4 +52,4 @@ const AdminMenu = () => {
       )
 }
 
-export default AdminMenu
+export default UserMenu
