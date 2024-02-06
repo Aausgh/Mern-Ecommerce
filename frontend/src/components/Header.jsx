@@ -32,7 +32,6 @@ const Header = () => {
       const navigate = useNavigate()
 
       const { isOpen, onOpen, onClose } = useDisclosure()
-      const btnRef = useRef()
 
       const handleLogout = () => {
             setAuth({
@@ -55,7 +54,7 @@ const Header = () => {
 
       return (
             <>
-                  <nav className=" sticky top-2 mx-5 rounded-xl shadow-xl z-50 px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-200">
+                  <nav className=" sticky top-2 w-[98%] m-auto rounded-xl shadow-xl z-50 px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-200">
 
 
                         <NavLink to={"/"} className="text-xl lg:text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">
@@ -83,8 +82,7 @@ const Header = () => {
 
                               <div className='lg:hidden'>
 
-                                    <Icon as={HiMenuAlt3} w={8} h={8} ref={btnRef} onClick={onOpen} className={` transition duration-300 transform ${isOpen ? 'rotate-180' : ''
-                                          }`} />
+                                    <Icon as={HiMenuAlt3} w={8} h={8} onClick={onOpen} className={` transition duration-300 transform ${isOpen ? 'rotate-180' : 'rotate-0'}`} />
 
                               </div>
 
@@ -92,7 +90,6 @@ const Header = () => {
                                     isOpen={isOpen}
                                     placement='left'
                                     onClose={onClose}
-                                    finalFocusRef={btnRef}
                               >
                                     <DrawerOverlay />
                                     <DrawerContent sx={{ borderRadius: '12px', marginY: '10px', marginX: '10px' }}>
@@ -164,7 +161,7 @@ const Header = () => {
                                     ) : (
 
                                           <>
-                                                <Icon as={HiOutlineShoppingCart} w={8} h={8} marginEnd={2} ref={btnRef} onClick={onOpen} />
+                                                <Icon as={HiOutlineShoppingCart} w={8} h={8} marginEnd={2} onClick={onOpen} />
                                                 <Menu >
                                                       <MenuButton >
                                                             <Avatar name={auth.user.name} size='sm' src='' />
@@ -202,73 +199,7 @@ const Header = () => {
                         </div >
                   </nav >
 
-                  {/* <motion.div
-                        className={`fixed inset-0 z-50  ${isMenuOpen ? '' : 'hidden'}`}
-                        animate={{ x: isMenuOpen ? '0%' : '-100%' }}
-                        transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  >
 
-                        <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-[#e5e5e5] backdrop-blur-xl border-r-2 rounded-r-lg overflow-y-auto">
-                              <div className="flex items-center mb-8 border-b">
-                                    <a className="mr-auto text-3xl font-bold leading-none" href="#">
-                                          Hello
-                                    </a>
-
-                                    <button className="navbar-close" onClick={toggleMenu}>
-                                          <Icon as={IoCloseOutline} w={8} h={8} color="black" />
-                                    </button>
-                              </div>
-
-                              <div>
-                                    <ul>
-                                          {Links.map((links) => (
-                                                <li key={links.name} className="mb-1">
-                                                      <NavLink
-                                                            to={links.link}
-                                                            className="block p-4 text-lg font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md"
-                                                      >
-                                                            {links.name}
-                                                      </NavLink>
-                                                </li>
-                                          ))}
-                                    </ul>
-                              </div>
-
-                              <div className="mt-auto">
-                                    <div className="pt-6">
-                                          {
-                                                !auth.user ? (
-                                                      <>
-                                                            <NavLink
-                                                                  to={"/login"}
-                                                                  className="block px-4 py-3 mb-3 leading-loose text-lg text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl">
-                                                                  Log In
-                                                            </NavLink>
-
-                                                            <NavLink
-                                                                  to={"/register"}
-                                                                  className="block px-4 py-3 mb-2 leading-loose text-lg text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl">
-                                                                  Register
-                                                            </NavLink>
-                                                      </>
-                                                ) : (
-                                                      <>
-                                                            <NavLink
-                                                                  onClick={handleLogout}
-                                                                  to={"/login"}
-                                                                  className="block px-4 py-3 mb-2 leading-loose text-lg text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                                                            >
-                                                                  Logout
-                                                            </NavLink>
-                                                      </>
-                                                )
-                                          }
-                                    </div>
-
-                                    
-                              </div>
-                        </nav>
-                  </motion.div> */}
             </>
       );
 };

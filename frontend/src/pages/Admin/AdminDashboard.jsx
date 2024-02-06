@@ -1,6 +1,5 @@
 import React from 'react'
-import AdminMenu from '../../components/AdminMenu'
-import Contact from '../Contact'
+import AdminMenu from '../../components/Menu/AdminMenu'
 
 const AdminDashboard = () => {
       return (

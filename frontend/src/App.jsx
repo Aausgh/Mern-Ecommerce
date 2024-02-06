@@ -17,7 +17,6 @@ import ForgotPassword from './pages/Auth/ForgotPassword'
 import AdminDashboard from './pages/Admin/AdminDashboard'
 import AdminRoute from './Routes/AdminRoute'
 import { useAuth } from './context/auth'
-import AdminMenu from './components/AdminMenu'
 import Products from './pages/Admin/Products'
 import Categories from './pages/Admin/Categories'
 import Users from './pages/Admin/Users'
@@ -29,7 +28,7 @@ const App = () => {
     <>
       <Header />
 
-      <main className='min-h-screen w-full mt-4'>
+      <main className='min-h-screen w-[98%] m-auto mt-4'>
         <ToastContainer />
 
         <Routes>
