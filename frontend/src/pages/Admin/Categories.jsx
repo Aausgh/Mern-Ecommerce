@@ -18,8 +18,8 @@ const Categories = () => {
             try {
                   const api = import.meta.env.VITE_SERVER_URL;
                   const { data } = await axios.get(`${api}/category/get-category`)
-                  if (data.success) {
-                        setCategories(data.category)
+                  if (data?.success) {
+                        setCategories(data?.category)
                   }
 
             } catch (error) {
