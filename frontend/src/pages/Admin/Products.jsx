@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import AdminMenu from '../../components/Menu/AdminMenu';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { Select } from 'antd';
+import ProductForm from '../../components/Form/ProductForm';
 
-const { Option } = Select;
+import { Drawer } from 'antd';
+import { FaPlus } from "react-icons/fa6";
+import ProductsTable from '../../components/Table/ProductsTable';
+import UpdateProductForm from '../../components/Form/UpdateProductForm';
 
 const Products = () => {
       const [categories, setCategories] = useState([]);
@@ -14,6 +18,51 @@ const Products = () => {
       const [category, setCategory] = useState('');
       const [quantity, setQuantity] = useState('');
       const [photo, setPhoto] = useState(null);
+
+
+      const [products, setProducts] = useState([]);
+      const [productData, setProductData] = useState({});
+
+      const [uName, setUName] = useState('');
+      const [uDescription, setUDescription] = useState('');
+      const [uPrice, setUPrice] = useState('');
+      const [uQuantity, setUQuantity] = useState('');
+      const [uCategory, setUCategory] = useState('');
+      const [uPhoto, setUPhoto] = useState('');
+      const [id, setId] = useState('');
+
+
+
+      const [open, setOpen] = useState(false);
+      const [show, setShow] = useState(false);
+      const showDrawer = () => {
+            setOpen(true);
+      };
+      const onClose = () => {
+            setOpen(false);
+            setShow(false);
+      };
+      const showUpdateDrawer = async (product) => {
+            setShow(true);
+            try {
+                  const api = import.meta.env.VITE_SERVER_URL;
+                  const { data } = await axios.get(`${api}/product/get-product/${product._id}`);
+
+                  setId(data.product._id);
+                  setUName(data.product.name);
+                  setUDescription(data.product.description);
+                  setUPrice(data.product.price);
+                  setUQuantity(data.product.quantity);
+                  setUCategory(data.product.category._id);
+                  setUPhoto(data.product.photo);
+
+            } catch (error) {
+                  console.error(error)
+
+            }
+      };
+
+
 
       const getCategories = async () => {
             try {
@@ -29,6 +78,7 @@ const Products = () => {
 
       useEffect(() => {
             getCategories();
+            getProducts();
       }, []);
 
       const handleCreate = async (e) => {
@@ -52,6 +102,8 @@ const Products = () => {
                         setCategory('');
                         setQuantity('');
                         setPhoto(null);
+                        setOpen(false);
+                        getProducts();
                   } else {
                         toast.error(data.message);
                   }
@@ -61,10 +113,69 @@ const Products = () => {
             }
       };
 
+      const getProducts = async () => {
+            try {
+                  const api = import.meta.env.VITE_SERVER_URL;
+                  const { data } = await axios.get(`${api}/product/get-products`);
+                  if (data?.success) {
+                        setProducts(data.products);
+                  }
+
+            } catch (error) {
+                  console.log(error);
+
+            }
+      }
+
+
+      const handleUpdate = async (e) => {
+            e.preventDefault();
+            try {
+                  const api = import.meta.env.VITE_SERVER_URL;
+                  const formData = new FormData();
+                  formData.append('name', uName);
+                  formData.append('description', uDescription);
+                  formData.append('price', uPrice);
+                  formData.append('category', uCategory);
+                  formData.append('quantity', uQuantity);
+                  uPhoto && formData.append('photo', uPhoto);
+                  const { data } = await axios.put(`${api}/product/update-product/${id}`, formData);
+                  if (data?.success) {
+                        toast.success(data.message);
+                        setShow(false);
+                        getProducts();
+                  } else {
+                        toast.error(data.message);
+                  }
+
+            } catch (error) {
+                  console.log(error);
+                  toast.error('Something went wrong!');
+
+            }
+
+      }
+
+
+      const handleDelete = async (id) => {
+            try {
+                  const api = import.meta.env.VITE_SERVER_URL;
+                  const { data } = await axios.delete(`${api}/product/delete-product/${id}`);
+                  if (data.success) {
+                        toast.success(data.message);
+                        getProducts();
+                  } else {
+                        toast.error('Something went wrong!');
+                  }
+            } catch (error) {
+                  console.log(error);
+            }
+      }
+
       return (
             <>
-                  <div className='w-full grid grid-cols-12'>
-                        <div className='col-span-2 lg:col-span-2'>
+                  <div className='relative w-full grid grid-cols-12'>
+                        <div className=' col-span-2 lg:col-span-2'>
                               <div className='fixed'>
                                     <AdminMenu />
                               </div>
@@ -74,94 +185,82 @@ const Products = () => {
 
                                     <h1 className='text-xl font-bold mb-2'>Products</h1>
 
-                                    <form className='w-full mb-3 shadow-xl px-4 py-2 rounded-xl border' onSubmit={handleCreate}>
-                                          <div className="mb-4">
-                                                <input
-                                                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                      id="name"
-                                                      type="text"
-                                                      placeholder="Name"
-                                                      value={name}
-                                                      onChange={(e) => setName(e.target.value)}
-                                                />
-                                          </div>
-                                          <div className='w-full flex justify-center items-center gap-4'>
-                                                <div className="w-full mb-4">
-                                                      <input
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                            type="number"
-                                                            placeholder="Price"
-                                                            value={price}
-                                                            onChange={(e) => setPrice(e.target.value)}
-                                                      />
-                                                </div>
-                                                <div className="w-full mb-4">
-                                                      <input
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                            type="number"
-                                                            placeholder="Quantity"
-                                                            value={quantity}
-                                                            onChange={(e) => setQuantity(e.target.value)}
-                                                      />
-                                                </div>
-                                          </div>
-                                          <div className="mb-4">
-                                                <textarea
-                                                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                      type="text"
-                                                      placeholder="Description"
-                                                      value={description}
-                                                      onChange={(e) => setDescription(e.target.value)}
-                                                ></textarea>
-                                          </div>
-                                          <Select
-                                                showSearch
-                                                placeholder={'Select Category'}
-                                                className='shadow appearance-none border rounded w-36 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4'
-                                                onChange={(value) => {
-                                                      setCategory(value);
-                                                }}
-                                          >
-                                                {categories.map((category) => (
-                                                      <Option key={category._id} value={category._id} className='capitalize '>
-                                                            {category.name}
-                                                      </Option>
-                                                ))}
-                                          </Select>
-                                          <div className='w-full flex justify-start items-center gap-4'>
-                                                <div className='mb-3'>
-                                                      <label className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded'>
-                                                            {photo ? photo.name : 'Upload Photo'}
-                                                            <input
-                                                                  type='file'
-                                                                  name='photo'
-                                                                  accept='image/*'
-                                                                  hidden
-                                                                  onChange={(e) => setPhoto(e.target.files[0])}
-                                                            />
-                                                      </label>
-                                                </div>
-                                                <div className='mb-3'>
-                                                      {photo && (
-                                                            <div>
-                                                                  <img
-                                                                        src={URL.createObjectURL(photo)}
-                                                                        alt='product_photo'
-                                                                        className='w-20 h-20 rounded-full'
-                                                                  />
-                                                            </div>
-                                                      )}
-                                                </div>
-                                          </div>
-                                          <div>
-                                                <button
-                                                      className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'
-                                                      type='submit'
-                                                >
-                                                      Create
-                                                </button>
-                                          </div>
-                                    </form>
+                                    <button
+                                          onClick={showDrawer}
+                                          type="button"
+                                          className="text-white flex justify-center items-center gap-2 bg-purple-700 hover:bg-purple-800  font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 "
+                                    >
+                                          <FaPlus />
+                                          Add Product
+                                    </button>
+
+
+                                    <Drawer
+                                          title="Add Product"
+                                          onClose={onClose}
+                                          open={open}
+                                          className='rounded-xl'
+                                          width={520}
+                                    >
+
+                                          <ProductForm
+                                                handleCreate={handleCreate}
+                                                name={name}
+                                                description={description}
+                                                price={price}
+                                                quantity={quantity}
+                                                photo={photo}
+                                                setName={setName}
+                                                setDescription={setDescription}
+                                                setPrice={setPrice}
+                                                setCategory={setCategory}
+                                                setQuantity={setQuantity}
+                                                setPhoto={setPhoto}
+                                                categories={categories}
+                                          />
+
+                                    </Drawer>
+
+
+                                    <Drawer
+                                          title="Update Product"
+                                          onClose={onClose}
+                                          open={show}
+                                          className='rounded-xl'
+                                          width={520}
+
+                                    >
+                                          <UpdateProductForm
+                                                handleUpdate={handleUpdate}
+                                                id={id}
+                                                name={uName}
+                                                description={uDescription}
+                                                price={uPrice}
+                                                category={uCategory}
+                                                quantity={uQuantity}
+                                                photo={uPhoto}
+                                                setName={setUName}
+                                                setDescription={setUDescription}
+                                                setPrice={setUPrice}
+                                                setCategory={setUCategory}
+                                                setQuantity={setUQuantity}
+                                                setPhoto={setUPhoto}
+                                                categories={categories}
+                                          />
+
+
+                                    </Drawer>
+
+                                    <ProductsTable
+                                          products={products}
+                                          handleDelete={handleDelete}
+                                          showDrawer={showUpdateDrawer}
+                                    />
+
+
+
+
+
                               </div>
                         </div>
                   </div>

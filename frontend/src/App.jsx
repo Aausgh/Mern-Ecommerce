@@ -1,5 +1,5 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -16,14 +16,23 @@ import PrivateRoute from './Routes/PrivateRoute'
 import ForgotPassword from './pages/Auth/ForgotPassword'
 import AdminDashboard from './pages/Admin/AdminDashboard'
 import AdminRoute from './Routes/AdminRoute'
-import { useAuth } from './context/auth'
 import Products from './pages/Admin/Products'
 import Categories from './pages/Admin/Categories'
 import Users from './pages/Admin/Users'
 import Order from './pages/User/Order'
 
 const App = () => {
-  const [auth, setAuth] = useAuth();
+  const location = useLocation();
+  const [hideFooter, setHideFooter] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname.includes('/admin')) {
+      setHideFooter(true);
+    } else {
+      setHideFooter(false);
+    }
+  }, [location]);
+
   return (
     <>
       <Header />
@@ -45,8 +54,6 @@ const App = () => {
             <Route path="admin/users" element={<Users />} />
           </Route>
 
-
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -58,9 +65,8 @@ const App = () => {
 
       </main>
 
-      <Footer />
+      {!hideFooter && <Footer />}
     </>
-
   )
 }
 

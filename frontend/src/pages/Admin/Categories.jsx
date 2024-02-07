@@ -40,6 +40,7 @@ const Categories = () => {
                   const { data } = await axios.post(`${api}/category/create-category`, { name })
                   if (data.success) {
                         toast.success(data.message)
+                        setName('')
                         getCategories()
                   } else {
                         toast.error(data.message)
@@ -96,7 +97,7 @@ const Categories = () => {
 
       return (
             <>
-                  <div className='w-full grid grid-cols-12'>
+                  <div className='w-full grid grid-cols-12 font-poppins'>
                         <div className=' col-span-2 lg:col-span-2'>
 
                               <div className='fixed'>
