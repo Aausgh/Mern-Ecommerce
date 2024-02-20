@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
-import logo from '../assets/images/logo.png'
+import logoo from '../assets/images/logoo.png'
 import {
       Menu,
       MenuButton,
@@ -48,35 +48,38 @@ const Header = () => {
       const Links = [
             { name: "Home", link: "/" },
             { name: "About", link: "/about" },
+            { name: "Blog", link: "/blog" },
             { name: "Contact", link: "/contact" },
       ];
 
 
       return (
             <>
-                  <nav className=" sticky top-2 w-[98%] m-auto rounded-xl shadow-xl z-50 px-4 py-4 font-[FiraCode] flex justify-between items-center bg-gray-200">
+                  <nav className=" sticky top-0 z-50 w-[98%] m-auto bg-white px-4 py-4 flex justify-between items-center ">
 
 
-                        <NavLink to={"/"} className="text-xl lg:text-3xl font-bold font-fira leading-none bg-gradient-to-r from-[#6dcdf5] to-[#645df1] bg-clip-text text-transparent">
-                              eLectronify
-                        </NavLink>
+
+                        <div className='flex justify-between items-end gap-8'>
+                              <NavLink to={"/"} className="text-xl lg:text-3xl font-bold font-fira leading-none text-[#aeaeae]">
+                                    eLectro
+                              </NavLink>
 
 
-                        <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
-                              {Links.map((links) => (
-                                    <li key={links.name}>
-                                          <NavLink
-                                                to={links.link}
-                                                className="text-lg font-semibold text-gray-800 hover:text-gray-600"
-                                          >
-                                                {links.name}
-                                          </NavLink>
+                              <ul className="hidden lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
 
-                                    </li>
-                              ))}
-                        </ul>
+                                    {Links.map((links) => (
+                                          <li key={links.name}>
+                                                <NavLink
+                                                      to={links.link}
+                                                      className="text-lg font-medium text-[#797979] hover:text-[#aeaeae]"
+                                                >
+                                                      {links.name}
+                                                </NavLink>
 
-
+                                          </li>
+                                    ))}
+                              </ul>
+                        </div>
 
                         <div className='flex justify-center items-center'>
 
