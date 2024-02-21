@@ -23,22 +23,26 @@ import Order from './pages/User/Order'
 import Blog from './pages/Blog'
 import UserProducts from './pages/UserProducts'
 import Search from './pages/Search'
+import ProductDetails from './pages/ProductDetails'
 
 const App = () => {
   const location = useLocation();
   const [hideFooter, setHideFooter] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
 
   useEffect(() => {
     if (location.pathname.includes('/admin')) {
       setHideFooter(true);
+      setHideHeader(true);
     } else {
       setHideFooter(false);
+      setHideHeader(false);
     }
   }, [location]);
 
   return (
     <>
-      <Header />
+      {!hideHeader && <Header />}
 
       <main className='min-h-screen w-[98%] m-auto mt-4'>
         <ToastContainer />
@@ -65,6 +69,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/products" element={<UserProducts />} />
+          <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/search" element={<Search />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

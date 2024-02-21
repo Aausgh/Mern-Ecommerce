@@ -70,7 +70,7 @@ const Home = () => {
 
 
                               <div className='mx-auto'>
-                                    <img src={beats_solo} className="w-[400px] drop-shadow-2xl shadow-black" alt="solo" />
+                                    <img src={beats_solo} className="w-[400px] drop-shadow-[0_15px_15px_rgba(0,0,0,0.85)] shadow-black" alt="solo" />
                               </div>
 
                               <div className=' mt-auto text-end'>
