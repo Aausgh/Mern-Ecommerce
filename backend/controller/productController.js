@@ -156,7 +156,7 @@ export const getSingleProductController = async (req, res) => {
 
       try {
             const product = await productModel
-                  .findById( req.params.id )
+                  .findOne({ slug: req.params.slug })
                   .select("-photo")
                   .populate("category")
             res.status(200).send({
@@ -266,6 +266,35 @@ export const searchProductController = async (req, res) => {
             res.status(400).send({
                   success: false,
                   message: "Error while searching product",
+                  error
+            })
+            
+      }
+}
+
+
+//similar products
+export const similarProductController = async (req, res) => {
+      try {
+            const { pid, cid } = req.params
+            const products = await productModel
+                  .find({
+                  category: cid,
+                    _id: { $ne: pid }
+                  })
+                  .select("-photo")
+                  .limit(3)
+                  .populate("category")
+            res.status(200).send({
+                  success: true,
+                  products
+            })
+            
+      } catch (error) {
+            console.log(error);
+            res.status(400).send({
+                  success: false,
+                  message: "Error while filtering product",
                   error
             })
             
