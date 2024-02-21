@@ -26,6 +26,7 @@ import {
 } from '@chakra-ui/react'
 import { HiOutlineLogout, HiMenuAlt3, HiOutlineShoppingCart } from "react-icons/hi";
 import { RxDashboard } from "react-icons/rx";
+import SearchInput from './Form/SearchInput';
 
 const Header = () => {
       const [auth, setAuth] = useAuth();
@@ -55,12 +56,12 @@ const Header = () => {
 
       return (
             <>
-                  <nav className=" sticky top-0 z-50 w-[98%] m-auto bg-white px-4 py-4 flex justify-between items-center ">
+                  <nav className=" sticky top-0 z-50 w-[98%] m-auto bg-white px-4 py-4 flex justify-between items-end ">
 
 
 
-                        <div className='flex justify-between items-end gap-8'>
-                              <NavLink to={"/"} className="text-xl lg:text-3xl font-bold font-fira leading-none text-[#aeaeae]">
+                        <div className='flex justify-between items-center gap-8'>
+                              <NavLink to={"/"} className="text-3xl md:text-3xl font-bold font-fira leading-none text-[#aeaeae]">
                                     eLectro
                               </NavLink>
 
@@ -81,7 +82,11 @@ const Header = () => {
                               </ul>
                         </div>
 
-                        <div className='flex justify-center items-center'>
+
+
+                        <div className='flex justify-center items-center gap-4'>
+
+                              <SearchInput />
 
                               <div className='lg:hidden'>
 

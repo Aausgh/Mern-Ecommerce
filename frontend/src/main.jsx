@@ -5,16 +5,18 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/auth.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
-
+import { SearchProvider } from './context/search.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <SearchProvider>
         <ChakraProvider>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </ChakraProvider>
-      </AuthProvider>
-    </BrowserRouter>
+      </SearchProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )

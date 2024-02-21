@@ -22,6 +22,7 @@ import Users from './pages/Admin/Users'
 import Order from './pages/User/Order'
 import Blog from './pages/Blog'
 import UserProducts from './pages/UserProducts'
+import Search from './pages/Search'
 
 const App = () => {
   const location = useLocation();
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/products" element={<UserProducts />} />
+          <Route path="/search" element={<Search />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 
