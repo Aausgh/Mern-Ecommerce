@@ -1,35 +1,40 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useAuth } from '../context/auth';
+import { useCategory } from '../hooks/useCategory';
+
+
 import { toast } from 'react-toastify';
-import logoo from '../assets/images/logoo.png'
 import {
       Menu,
       MenuButton,
       MenuList,
       MenuItem,
       MenuGroup,
-      Button,
       Avatar,
       Icon,
-      Image,
       useDisclosure,
       Drawer,
       DrawerBody,
       DrawerFooter,
-      DrawerHeader,
       DrawerOverlay,
       DrawerContent,
       DrawerCloseButton,
       Heading,
+      Text,
 } from '@chakra-ui/react'
-import { HiOutlineLogout, HiMenuAlt3, HiOutlineShoppingCart } from "react-icons/hi";
+import {
+      HiOutlineLogout,
+      HiMenuAlt3,
+      HiOutlineShoppingCart
+} from "react-icons/hi";
 import { RxDashboard } from "react-icons/rx";
+import { IoMdArrowDropdown } from "react-icons/io";
 import SearchInput from './Form/SearchInput';
 
 const Header = () => {
       const [auth, setAuth] = useAuth();
+      const categories = useCategory();
       const navigate = useNavigate()
 
       const { isOpen, onOpen, onClose } = useDisclosure()
@@ -60,8 +65,8 @@ const Header = () => {
 
 
 
-                        <div className='flex justify-between items-center gap-8'>
-                              <NavLink to={"/"} className="text-3xl md:text-3xl font-bold font-fira leading-none text-[#aeaeae]">
+                        <div className='flex justify-between items-end gap-8'>
+                              <NavLink to={"/"} className="hidden lg:inline md:text-3xl font-bold font-fira leading-none text-[#aeaeae]">
                                     eLectro
                               </NavLink>
 
@@ -72,21 +77,43 @@ const Header = () => {
                                           <li key={links.name}>
                                                 <NavLink
                                                       to={links.link}
-                                                      className="text-lg font-medium text-[#797979] hover:text-[#aeaeae]"
+                                                      className="text-lg font-medium text-gray-800 hover:text-gray-600"
                                                 >
                                                       {links.name}
                                                 </NavLink>
 
                                           </li>
                                     ))}
+
+                                    <Menu >
+
+                                          <MenuButton >
+                                                <Text className='text-lg font-medium text-gray-800 hover:text-gray-200'>
+                                                      Categories
+                                                </Text>
+
+                                          </MenuButton>
+                                          <MenuList  >
+                                                <MenuGroup >
+
+                                                      {categories.map((category) => (
+                                                            <MenuItem
+                                                                  as={NavLink}
+                                                                  color="gary.800"
+                                                                  to={`/categories/${category.slug}`}
+                                                                  className="text-base font-medium  hover:text-black"
+                                                            >
+                                                                  {category.name}
+                                                            </MenuItem>
+                                                      ))}
+
+                                                </MenuGroup>
+
+                                          </MenuList>
+                                    </Menu>
                               </ul>
-                        </div>
 
 
-
-                        <div className='flex justify-center items-center gap-4'>
-
-                              <SearchInput />
 
                               <div className='lg:hidden'>
 
@@ -116,6 +143,33 @@ const Header = () => {
                                                                   </NavLink>
                                                             </li>
                                                       ))}
+
+                                                      <Menu >
+
+                                                            <MenuButton >
+                                                                  <Text fontSize='lg' fontWeight="medium" color="gray.800" className='block p-4 text-lg font-semibold border-b border-gray-200 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md'>
+                                                                        Categories
+                                                                  </Text>
+
+                                                            </MenuButton>
+                                                            <MenuList  >
+                                                                  <MenuGroup >
+
+                                                                        {categories.map((category) => (
+                                                                              <MenuItem
+                                                                                    as={NavLink}
+                                                                                    color="gary.800"
+                                                                                    to={`/categories/${category.slug}`}
+                                                                                    className="text-base font-medium  hover:text-black"
+                                                                              >
+                                                                                    {category.name}
+                                                                              </MenuItem>
+                                                                        ))}
+
+                                                                  </MenuGroup>
+
+                                                            </MenuList>
+                                                      </Menu>
                                                 </ul>
 
                                           </DrawerBody>
@@ -147,6 +201,15 @@ const Header = () => {
                                           </DrawerFooter>
                                     </DrawerContent>
                               </Drawer>
+
+                        </div>
+
+
+
+                        <div className='flex justify-center items-end gap-4'>
+
+
+                              <SearchInput />
 
 
                               {
@@ -181,7 +244,7 @@ const Header = () => {
                                                                         as={NavLink}
                                                                         icon={<RxDashboard size={15} />}
                                                                         color="gary.800"
-                                                                        to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
+                                                                        to={`/ dashboard / ${auth?.user?.role === 1 ? "admin" : "user"}`}
                                                                         className="text-lg font-medium  hover:text-black"
                                                                   >
 

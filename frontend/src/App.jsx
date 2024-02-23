@@ -24,6 +24,7 @@ import Blog from './pages/Blog'
 import UserProducts from './pages/UserProducts'
 import Search from './pages/Search'
 import ProductDetails from './pages/ProductDetails'
+import CategoryProduct from './pages/CategoryProduct'
 
 const App = () => {
   const location = useLocation();
@@ -70,6 +71,7 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/products" element={<UserProducts />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
+          <Route path="/categories/:slug" element={<CategoryProduct />} />
           <Route path="/search" element={<Search />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
