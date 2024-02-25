@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { useAuth } from './context/auth'
+
+
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -20,13 +23,16 @@ import Products from './pages/Admin/Products'
 import Categories from './pages/Admin/Categories'
 import Users from './pages/Admin/Users'
 import Order from './pages/User/Order'
-import Blog from './pages/Blog'
 import UserProducts from './pages/UserProducts'
 import Search from './pages/Search'
 import ProductDetails from './pages/ProductDetails'
 import CategoryProduct from './pages/CategoryProduct'
+import Cart from './pages/Cart'
 
 const App = () => {
+
+  const [auth] = useAuth();
+
   const location = useLocation();
   const [hideFooter, setHideFooter] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
@@ -68,12 +74,15 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
           <Route path="/products" element={<UserProducts />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/categories/:slug" element={<CategoryProduct />} />
+          <Route path="/cart" element={auth?.user ? <Cart /> : <PageNotFound />} />
           <Route path="/search" element={<Search />} />
           <Route path="*" element={<PageNotFound />} />
+
+
+
         </Routes>
 
       </main>

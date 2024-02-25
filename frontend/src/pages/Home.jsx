@@ -85,7 +85,10 @@ const Home = () => {
                                     <h1 className=" text-9xl font-extrabold text-gray-100 mb-3">
                                           HEADPHONE
                                     </h1>
-                                    <button className="w-[200px] bg-gradient-to-r from-[#740811] to-[#f3293a] hover:from-[#f3293a] hover:to-[#740811] text-white font-semibold py-3 rounded-3xl">
+                                    <button
+                                          onClick={() => navigate("/product/Beat-Solo-3")}
+                                          className="w-[200px] bg-gradient-to-r from-[#740811] to-[#f3293a] hover:from-[#f3293a] hover:to-[#740811] text-white font-semibold py-3 rounded-3xl"
+                                    >
                                           Buy Now
                                     </button>
 
@@ -242,7 +245,9 @@ const Home = () => {
                                                       <h3 className=" text-3xl font-extrabold text-[#bab3ad] mb-3">
                                                             SMARTPHONE
                                                       </h3>
-                                                      <button className="w-[100px] bg-[#e4e5e5]  text-gray-900 font-semibold py-2 rounded-3xl">
+                                                      <button
+                                                            onClick={() => navigate('/categories/smartphone')}
+                                                            className="w-[100px] bg-[#e4e5e5]  text-gray-900 font-semibold py-2 rounded-3xl">
                                                             Browse
                                                       </button>
                                                 </div>

@@ -1,9 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaCartPlus } from "react-icons/fa6";
+import { useCart } from '../context/cart';
 
 
 const Card = ({ product }) => {
+
+      const [cart, setCart] = useCart();
 
       const api = import.meta.env.VITE_SERVER_URL;
 
@@ -28,7 +31,15 @@ const Card = ({ product }) => {
                                     <h1 className='text-xl font-bold'>${product.price}</h1>
                               </div>
 
-                              <button >
+                              <button
+                                    onClick={() => {
+                                          setCart([...cart, product]);
+                                          localStorage.setItem(
+                                                "cart",
+                                                JSON.stringify([...cart, product])
+                                          )
+                                    }}
+                              >
                                     <FaCartPlus size={30} />
                               </button>
 

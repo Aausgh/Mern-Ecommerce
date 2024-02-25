@@ -23,17 +23,20 @@ import {
       Heading,
       Text,
 } from '@chakra-ui/react'
+import { Badge } from 'antd'
 import {
       HiOutlineLogout,
       HiMenuAlt3,
       HiOutlineShoppingCart
 } from "react-icons/hi";
 import { RxDashboard } from "react-icons/rx";
-import { IoMdArrowDropdown } from "react-icons/io";
 import SearchInput from './Form/SearchInput';
+import { useCart } from "../context/cart";
 
 const Header = () => {
       const [auth, setAuth] = useAuth();
+
+      const [cart] = useCart();
       const categories = useCategory();
       const navigate = useNavigate()
 
@@ -54,7 +57,6 @@ const Header = () => {
       const Links = [
             { name: "Home", link: "/" },
             { name: "About", link: "/about" },
-            { name: "Blog", link: "/blog" },
             { name: "Contact", link: "/contact" },
       ];
 
@@ -98,6 +100,7 @@ const Header = () => {
 
                                                       {categories.map((category) => (
                                                             <MenuItem
+                                                                  key={category._id}
                                                                   as={NavLink}
                                                                   color="gary.800"
                                                                   to={`/categories/${category.slug}`}
@@ -157,6 +160,7 @@ const Header = () => {
 
                                                                         {categories.map((category) => (
                                                                               <MenuItem
+                                                                                    key={category._id}
                                                                                     as={NavLink}
                                                                                     color="gary.800"
                                                                                     to={`/categories/${category.slug}`}
@@ -232,7 +236,10 @@ const Header = () => {
                                     ) : (
 
                                           <>
-                                                <Icon as={HiOutlineShoppingCart} w={8} h={8} marginEnd={2} onClick={onOpen} />
+                                                <Badge count={cart?.length} showZero>
+                                                      <Icon as={HiOutlineShoppingCart} w={8} h={8} marginEnd={2} onClick={() => { navigate("/cart") }} />
+                                                </Badge>
+
                                                 <Menu >
                                                       <MenuButton >
                                                             <Avatar name={auth.user.name} size='sm' src='' />
@@ -244,7 +251,7 @@ const Header = () => {
                                                                         as={NavLink}
                                                                         icon={<RxDashboard size={15} />}
                                                                         color="gary.800"
-                                                                        to={`/ dashboard / ${auth?.user?.role === 1 ? "admin" : "user"}`}
+                                                                        to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
                                                                         className="text-lg font-medium  hover:text-black"
                                                                   >
 
