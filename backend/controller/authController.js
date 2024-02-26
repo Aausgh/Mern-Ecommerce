@@ -129,6 +129,7 @@ export const loginController = async (req, res) => {
       }
 }
 
+//forgot password
 export const forgotPasswordController = async (req, res) => {
       try {
             const { email, answer, newPassword } = req.body;
@@ -179,8 +180,36 @@ export const forgotPasswordController = async (req, res) => {
       }
 }
 
-
-//test controller
-export const testController = (req, res) => {
-      res.send("protected route")
+//update profile
+export const updateProfileController = async (req, res) => {
+      try {
+            const { name, email, password, address, phone } = req.body;
+            const user = await userModel.findById(req.user._id);
+            if (password && password.length > 6) {
+                  return res.json({
+                        error: "Password is required and should be 6 characters long"
+                  })
+            }
+            const hashedPassword = password ? await hashPassword(password) : undefined;
+            const updatedUser = await userModel.findByIdAndUpdate(req.user._id, {
+                  name: name || user.name,
+                  email: email || user.email,
+                  password: hashedPassword || user.password,
+                  address: address || user.address,
+                  phone: phone || user.phone
+            }, { new: true })
+            res.status(200).send({
+                  success: true,
+                  message: "Profile Updated Successfully",
+                  updatedUser
+            })
+            
+      } catch (error) {
+            console.log(error);
+            res.status(500).send({
+                  success: false,
+                  message: "Error while updating profile. Please try again",
+                  error
+            })
+      }
 }
