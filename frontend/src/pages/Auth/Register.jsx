@@ -60,6 +60,7 @@ const Register = () => {
                                                       value={name}
                                                       onChange={(e) => setName(e.target.value)}
                                                       placeholder="Mike"
+                                                      required
                                                 />
                                           </div>
 
@@ -70,7 +71,9 @@ const Register = () => {
                                                       type='email'
                                                       value={email}
                                                       onChange={(e) => setEmail(e.target.value)}
-                                                      placeholder="mike@gmail.com" />
+                                                      placeholder="mike@gmail.com"
+                                                      required
+                                                />
                                           </div>
 
                                           <div className='py-2'>
@@ -80,7 +83,9 @@ const Register = () => {
                                                       type='password'
                                                       value={password}
                                                       onChange={(e) => setPassword(e.target.value)}
-                                                      placeholder="********" />
+                                                      placeholder="********"
+                                                      required
+                                                />
                                           </div>
 
                                           <div className='py-2'>
@@ -90,7 +95,9 @@ const Register = () => {
                                                       type='number'
                                                       value={phone}
                                                       onChange={(e) => setPhone(e.target.value)}
-                                                      placeholder="561-552-9770" />
+                                                      placeholder="561-552-9770"
+                                                      required
+                                                />
                                           </div>
 
                                           <div className='py-2'>
@@ -101,6 +108,7 @@ const Register = () => {
                                                       value={address}
                                                       onChange={(e) => setAddress(e.target.value)}
                                                       placeholder="2267 Geneva Street"
+                                                      required
                                                 />
                                           </div>
 
@@ -112,6 +120,7 @@ const Register = () => {
                                                       value={answer}
                                                       onChange={(e) => setAnswer(e.target.value)}
                                                       placeholder="What is your favorite color?"
+                                                      required
                                                 />
                                           </div>
 
